@@ -16,6 +16,7 @@ class kibana (
     revision => $git_hash,
   }
 
+  # ensure proper resource chaining
   Class['kibana'] ->
   class { 'kibana::config': } ~>
   class { 'kibana::service': }

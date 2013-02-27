@@ -17,6 +17,7 @@ class kibana (
   }
 
   # ensure proper resource chaining
+  class { 'kibana::dependencies': } ->
   Class['kibana'] ->
   class { 'kibana::config': } ~>
   class { 'kibana::service': }

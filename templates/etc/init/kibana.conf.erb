@@ -9,7 +9,6 @@ respawn limit 5 30
 
 chdir /opt/kibana
 
-console log
 script
-  su www-data -c 'bundle exec ruby kibana.rb'
+  su www-data -c 'ruby kibana.rb'
 end script

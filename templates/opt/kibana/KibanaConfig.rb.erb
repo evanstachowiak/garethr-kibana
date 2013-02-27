@@ -42,6 +42,10 @@ module KibanaConfig
   # Default_fields = ['@fields.vhost','@fields.response','@fields.request']
   Default_fields = ['@message']
 
+  # If set to true, Kibana will use the Highlight feature of Elasticsearch to
+  # display highlighted search results
+  Highlight_results = true
+
   # The default operator used if no explicit operator is specified.
   # For example, with a default operator of OR, the query capital of
   # Hungary is translated to capital OR of OR Hungary, and with default

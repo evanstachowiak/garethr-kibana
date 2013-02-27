@@ -8,17 +8,8 @@ class kibana (
 ) inherits kibana::params {
   $ensure_dir = $ensure ? { 'present' => 'directory', default => $ensure }
 
-  File['kibana_install_dir'] ->
-  Vcsrepo['/opt/kibana']
-  file { 'kibana_install_dir':
-    ensure => $ensure_dir,
-    path   => $install_dir,
-    mode   => $install_dir_mode,
-    owner  => $install_owner,
-    group  => $install_group,
-  }
   vcsrepo { '/opt/kibana':
-    ensure   => 'present',
+    ensure   => $ensure,
     provider => 'git',
     source   => 'git://github.com/rashidkpc/Kibana.git',
     revision => $git_hash,

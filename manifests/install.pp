@@ -21,6 +21,7 @@ class kibana::install {
 
   exec { 'bundle_kibana':
     command => 'bundle install --path vendor',
+    path    => '/bin:/usr/bin:/sbin:/usr/sbin',
     cwd     => '/opt/kibana',
     creates => '/opt/kibana/vendor',
   }

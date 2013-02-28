@@ -7,19 +7,21 @@ class kibana (
   $install_dir_owner = $kibana::params::install_dir_owner,
   $install_dir_group = $kibana::params::install_dir_group
 ) inherits kibana::params {
-  $ensure_dir = $ensure ? { 'present' => 'directory', default => $ensure }
 
-  vcsrepo { '/opt/kibana':
-    ensure   => $ensure,
-    provider => 'git',
-    source   => $git_source,
-    revision => $git_hash,
-  }
+  include stdlib
 
-  # ensure proper resource chaining
-  class { 'kibana::dependencies': } ->
-  Class['kibana'] ->
+  ### Proper resource chaining
+
+  # Notify service of any config changes
   class { 'kibana::config': } ~>
   class { 'kibana::service': }
-  anchor { 'kibana::begin': } -> Class['kibana::params'] -> anchor { 'kibana::end': }
+
+  # Ensure dependencies are installed before service starts
+  class { 'kibana::dependencies': } ->
+  Class['kibana::service']
+
+  # chain resources properly with anchor pattern
+  anchor { 'kibana::begin': } -> Class['kibana::config'] 
+  Class['kibana::service'] -> anchor { 'kibana::end': }
+
 }

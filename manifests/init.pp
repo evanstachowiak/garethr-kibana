@@ -35,7 +35,6 @@ class kibana (
 
   # Required modules for this class to work
   include stdlib
-  include vcsrepo
   include ruby::dev
 
   ### Proper resource chaining

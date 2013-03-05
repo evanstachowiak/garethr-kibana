@@ -13,16 +13,13 @@ class kibana (
   ### Proper resource chaining
 
   # Install kibana and notify service of any config changes
+  class { 'kibana::dependencies': } ->
   class { 'kibana::install': } ->
   class { 'kibana::config': } ~>
   class { 'kibana::service': }
 
-  # Ensure dependencies are installed before service starts
-  class { 'kibana::dependencies': } ->
-  Class['kibana::service']
-
   # chain resources properly with anchor pattern
-  anchor { 'kibana::begin': } -> Class['kibana::install'] 
+  anchor { 'kibana::begin': } -> Class['kibana::dependencies'] 
   Class['kibana::service'] -> anchor { 'kibana::end': }
 
 }

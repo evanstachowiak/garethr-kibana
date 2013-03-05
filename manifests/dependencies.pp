@@ -1,8 +1,14 @@
 class kibana::dependencies {
 
+  if ! defined (Package['rubygems']) { 
+    package { 'rubygems': 
+      ensure => $kibana::ensure,
+    }
+  }
   Package {
-    ensure => $kibana::ensure,
+    ensure   => $kibana::ensure,
     provider => gem,
+    require  => Package['rubygems'],
   }
   if ! defined(Package['sinatra'])   { package { 'sinatra': } }
   if ! defined(Package['json'])      { package { 'json': } }
